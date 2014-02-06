@@ -1052,17 +1052,18 @@ if (typeof Object.create !== "function") {
             var base = this,
                 array = base.options.scrollPerPage === true ? base.pagesInArray : base.positionsInArray,
                 goal = base.newPosX,
+                widthDivider = base.options.slideDivider || 20,
                 closest = null;
 
             $.each(array, function (i, v) {
-                if (goal - (base.itemWidth / 20) > array[i + 1] && goal - (base.itemWidth / 20) < v && base.moveDirection() === "left") {
+                if (goal - (base.itemWidth / widthDivider) > array[i + 1] && goal - (base.itemWidth / widthDivider) < v && base.moveDirection() === "left") {
                     closest = v;
                     if (base.options.scrollPerPage === true) {
                         base.currentItem = $.inArray(closest, base.positionsInArray);
                     } else {
                         base.currentItem = i;
                     }
-                } else if (goal + (base.itemWidth / 20) < v && goal + (base.itemWidth / 20) > (array[i + 1] || array[i] - base.itemWidth) && base.moveDirection() === "right") {
+                } else if (goal + (base.itemWidth / widthDivider) < v && goal + (base.itemWidth / widthDivider) > (array[i + 1] || array[i] - base.itemWidth) && base.moveDirection() === "right") {
                     if (base.options.scrollPerPage === true) {
                         closest = array[i + 1] || array[array.length - 1];
                         base.currentItem = $.inArray(closest, base.positionsInArray);
@@ -1464,6 +1465,7 @@ if (typeof Object.create !== "function") {
         slideSpeed : 200,
         paginationSpeed : 800,
         rewindSpeed : 1000,
+        slideDivider : 20,
 
         autoPlay : false,
         stopOnHover : false,
